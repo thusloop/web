@@ -1,0 +1,12 @@
+.idea/
+__pycache__/
+meili_data/
+test/
+test.py
+data/jrm/
+data/rql/
+data/alldata/
+
+data/yyj/
+data.json
+meili.json
