@@ -2,7 +2,7 @@ import asyncio
 import asyncpg
 from passlib.context import CryptContext
 from functools import wraps
-from datetime import date
+from datetime import date,datetime
 
 import traceback
 pool = None
@@ -482,41 +482,42 @@ async def check_rights(userId:str):
         return values    
 
 @check_conn
-async def search_log(userId:str,limit:int=10,offset:int=0):
+async def search_log(userId:str,limit:int=10,offset:int=0,start_time:date=date(1970,1,1),end_time:date=date(2099,12,31)):
     global pool
     async with pool.acquire() as connection:
-        sql = 'select log_date,"userId",operation from web_project.user_log where "userId" = $1 LIMIT $2 OFFSET $3;'
+        sql = 'select log_date,"userId",operation from web_project.user_log where log_date>=$1 and log_date<=$2 and "userId" = $3 LIMIT $4 OFFSET $5;'
         values = await connection.fetch(
-            sql,userId,limit,offset
+            sql,start_time,end_time,userId,limit,offset
         )
         return values 
 
 @check_conn
-async def search_log_cnt(userId:str):
+async def search_log_cnt(userId:str,start_time:date=date(1970,1,1),end_time:date=date(2099,12,31)):
     global pool
     async with pool.acquire() as connection:
-        sql = 'select count(1) from web_project.user_log where "userId"=$1;'
+        sql = 'select count(1) from web_project.user_log where "userId"=$1 and log_date>=$2 and log_date<=$3;'
         values = await connection.fetch(
-            sql,userId
+            sql,userId,start_time,end_time
         )
         return values
 
 @check_conn
-async def search_alllog(limit:int=10,offset:int=0):
+async def search_alllog(limit:int,offset:int,start_time:datetime,end_time:datetime):
+    
     global pool
     async with pool.acquire() as connection:
-        sql = 'select log_date,"userId",operation from web_project.user_log LIMIT $1 OFFSET $2;'
+        sql = 'select log_date,"userId",operation from web_project.user_log where log_date>=$1 and log_date<=$2 LIMIT $3 OFFSET $4 ;'
         values = await connection.fetch(
-            sql,limit,offset
+            sql,start_time,end_time,limit,offset
         )
         return values    
 
 @check_conn
-async def search_log_cntall():
+async def search_log_cntall(start_time:date,end_time:date):
     global pool
     async with pool.acquire() as connection:
-        sql = 'select count(1) from web_project.user_log;'
+        sql = 'select count(1) from web_project.user_log where log_date>=$1 and log_date<=$2;'
         values = await connection.fetch(
-            sql
+            sql,start_time,end_time
         )
         return values                

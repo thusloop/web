@@ -116,26 +116,26 @@ async def abtest(request:Request):
 
 #查看某个人的日志
 @router.get('/api/log',response_model=Response)
-async def serach_log(request:Request,userId:str='',limit:int=10,offset:int=0):
+async def serach_log(request:Request,userId:str='',limit:int=10,offset:int=0,start_time:date=date(1970,1,1),end_time:date=date(2970,1,1)):
     token = OAuth2PasswordBearer('token')
     token = await token(request)
     userId_ = (await get_current_user(token=token)).get('userId')
     val=await pgsql.check_rights(userId_);
     if val[0].get('rights')==0:  
         return {'code':401,'message':'权限不足','data':{}}
-    log_list=await pgsql.search_log(userId,limit,offset)
-    total_num =await pgsql.search_log_cnt(userId)    
+    log_list=await pgsql.search_log(userId,limit,offset,start_time,end_time)
+    total_num =await pgsql.search_log_cnt(userId,start_time,end_time)    
     return {'code':200,'message':'查询成功','data':{'quiz_list':log_list,'total_num':total_num}}
 
 #查看所有人的日志
 @router.get('/api/alllog',response_model=Response)
-async def serach_log(request:Request,limit:int=10,offset:int=0):
+async def serach_log(request:Request,limit:int=10,offset:int=0,start_time:date=date(1970,1,1),end_time:date=date(2970,1,1)):
     token = OAuth2PasswordBearer('token')
     token = await token(request)
     userId_ = (await get_current_user(token=token)).get('userId')
     val=await pgsql.check_rights(userId_);
     if val[0].get('rights')==0:        
         return {'code':401,'message':'权限不足','data':{}}
-    log_list=await pgsql.search_alllog(limit,offset)  
-    total_num =await pgsql.search_log_cntall() 
+    log_list=await pgsql.search_alllog(limit,offset,start_time,end_time)  
+    total_num =await pgsql.search_log_cntall(start_time,end_time) 
     return {'code':200,'message':'查询成功','data':{'quiz_list':log_list,'total_num':total_num}}
