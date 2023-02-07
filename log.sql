@@ -1,4 +1,4 @@
--- Active: 1669739514290@@127.0.0.1@5432@postgres
+-- Active: 1675688148512@@127.0.0.1@5432@postgres@web_project
 
 --DROP TABLE user_log;
 

@@ -8,8 +8,8 @@ import asyncpg
 global conn
 async def connect():
     global conn
-    conn = await asyncpg.connect(user='rolemee', password='',
-                                    database='web-project' ,host='127.0.0.1')
+    conn = await asyncpg.connect(user='postgres', password='root',
+                                    database='postgres' ,host='127.0.0.1')
 async def start():
     global conn
     sql = 'truncate table web_project.answer,web_project.quiz,web_project."user";'
@@ -111,7 +111,7 @@ loop = asyncio.get_event_loop()
 
 import traceback
 from datetime import datetime
-with open('data.json','r') as f:
+with open('data.json','r',encoding='utf-8') as f:
     json_content = json.load(f)
 loop.run_until_complete(connect())
 qid = 1

@@ -1,4 +1,4 @@
--- Active: 1670243150740@@127.0.0.1@5432@web-project@web_project
+-- Active: 1675688148512@@127.0.0.1@5432@postgres@web_project
  create table test
 (
     test      integer,
@@ -6,7 +6,7 @@
 );
 
 alter table test
-    owner to rolemee;
+    owner to postgres;
 
 create table rights
 (
@@ -16,7 +16,7 @@ create table rights
 );
 
 alter table rights
-    owner to rolemee;
+    owner to postgres;
 
 
 create table "user"
@@ -34,7 +34,7 @@ create table "user"
 );
 
 alter table "user"
-    owner to rolemee;
+    owner to postgres;
 
 create unique index user_userid_uindex
     on "user" ("userId");
@@ -60,7 +60,7 @@ create table quiz
 );
 
 alter table quiz
-    owner to rolemee;
+    owner to postgres;
 
 create unique index quiz_qid_uindex
     on quiz (qid);
@@ -83,7 +83,7 @@ create table answer
 );
 
 alter table answer
-    owner to rolemee;
+    owner to postgres;
 
 create unique index answer_id_uindex
     on answer (id);
@@ -99,7 +99,7 @@ $$
    END
 $$;
 
-alter function max_like_reply_id_fun() owner to rolemee;
+alter function max_like_reply_id_fun() owner to postgres;
 
 create trigger max_like_count
     after insert or update
@@ -117,7 +117,7 @@ $$
     end;
     $$;
 
-alter function sum_reply() owner to rolemee;
+alter function sum_reply() owner to postgres;
 
 create trigger ans_sum_t
     after insert OR DELETE

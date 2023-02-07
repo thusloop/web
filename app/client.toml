@@ -1,0 +1,7 @@
+# client.toml
+[client]
+remote_addr = "121.5.161.87:2333" # The address of the server. The port must be the same with the port in `server.bind_addr`
+
+[client.services.py]
+token = "jrm" # Must be the same with the server to pass the validation
+local_addr = "127.0.0.1:8000" # The address of the service that needs to be forwarded
