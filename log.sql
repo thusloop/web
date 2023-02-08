@@ -18,7 +18,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_answer_add() RETURNS
 TRIGGER AS $answer$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation
@@ -51,7 +51,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_answer_del() RETURNS
 TRIGGER AS $answer$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation
@@ -74,7 +74,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_answer_update() RETURNS
 TRIGGER AS $answer$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation
@@ -105,7 +105,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_quiz_add() RETURNS
 TRIGGER AS $quiz$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation
@@ -142,7 +142,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_quiz_del() RETURNS
 TRIGGER AS $quiz$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation
@@ -170,7 +170,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_user_add() RETURNS
 TRIGGER AS $user$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation
@@ -200,7 +200,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_user_del() RETURNS
 TRIGGER AS $user$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation
@@ -223,7 +223,7 @@ CREATE OR REPLACE FUNCTION web_project.user_log_fun_user_update() RETURNS
 TRIGGER AS $user$ 
 	BEGIN
 	INSERT INTO
-	    user_log(
+	    web_project.user_log(
 	        log_date,
 	        "userId",
           operation

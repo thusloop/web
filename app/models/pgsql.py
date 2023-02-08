@@ -520,4 +520,34 @@ async def search_log_cntall(start_time:date,end_time:date):
         values = await connection.fetch(
             sql,start_time,end_time
         )
-        return values                
+        return values
+
+@check_conn
+async def edit_mail(userId:str,mail:str):
+    global pool
+    sql = '''
+        UPDATE web_project."user" SET mail = $2 WHERE "userId"=$1;
+        '''
+    async with pool.acquire() as conn:
+        values = await conn.fetch(
+            sql,userId,mail
+        )
+
+    return values                        
+
+#UPDATE web_project."user" SET mail = '1556444894@qq.com' WHERE "userId"='wscc';
+@check_conn
+async def forget_password(mail:str,password:str):
+    global pool
+
+    sql = '''
+        UPDATE web_project."user"
+        SET password = $2::varchar(60)
+        WHERE "mail"=$1;
+        '''
+    async with pool.acquire() as conn:
+        values = await conn.fetch(
+            sql,mail,password
+        )
+
+    return values
