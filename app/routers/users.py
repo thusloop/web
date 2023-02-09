@@ -238,11 +238,10 @@ def sms(num:int,receiver:str):
 emil_dict={}
 
 @router.post('/api/sendmail',response_model=Response)
-async def send_mail(user:User=Depends(get_current_active_user),mail:str=Form()):
+async def send_mail(mail:str=Form()):
     if mail =='':
         raise ErrorOwn("请正确输入")
     try:    
-        userId = user.get('userId')
         num = random.randint(1000,9999)
         sms(num,mail)
         emil_dict[mail]=num
@@ -258,7 +257,7 @@ async def check_mail(user:User=Depends(get_current_active_user),mail:str=Form(),
     #print(emil_dict)
     try:
         if int(emil_dict[mail])==int(checknum):
-            await pgsql.edit_mail(mail,checknum)
+            await pgsql.edit_mail(userId,mail)
             return {'code':200,'message':'验证码正确','data':{}}
         else :
             return {'code':400,'message':'验证码错误','data':{}}  

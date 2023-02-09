@@ -29,7 +29,7 @@ create table "user"
     rights   integer default 0 not null
                 constraint user_rights_rightsid_fk
             references rights,
-    avatar  varchar(100) default '/image/avatar.png'
+    avatar  varchar(100) default '/image/avatar.png',
     mail varchar(50) default null
 
 );

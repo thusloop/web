@@ -9,6 +9,7 @@ import asyncio
 import psycopg2
 import multiprocessing
 res_list = []
+res_list2 = []
 # testnum = 1
 def connect():
     return psycopg2.connect(user='postgres', password='root',
@@ -140,6 +141,8 @@ def init(filename,user='alldata'):
 
                 ask = Ask(qid,ask_title,ask_id,ask_time,ask_content,answer_list,ask_tag)
                 res_list.append(ask.__dict__)
+                #res_list2.append(res_list[0])
+                #print(res_list[0])
                 connection.commit()
                 conn.close()
     except:
@@ -157,7 +160,7 @@ if __name__ == '__main__':
     ''')
     connection.commit()
     userlist = os.listdir(f'data/alldata/html/')
-    res_list = multiprocessing.Manager().list()
+    #res_list = multiprocessing.Manager().list()
     sum_total = multiprocessing.Value('i',0)
     start_time = time.time()
     sum = 0
@@ -166,10 +169,13 @@ if __name__ == '__main__':
     #     if sum >=100:
     #         break
     #     sum+=1
-    with multiprocessing.Pool(multiprocessing.cpu_count()) as p:
-        for _ in tqdm.tqdm(p.imap(init, (userlist)),total=len(userlist)):
-            pass
+    # with multiprocessing.Pool(multiprocessing.cpu_count()) as p:
+    #     for _ in tqdm.tqdm(p.imap(init, (userlist)),total=len(userlist)):
+    #         pass 
 
+
+    for i in tqdm.tqdm(os.listdir(f'data/alldata/html')):
+        init(i)
     conn.execute('''
         select setval('web_project.quiz_qid_seq',(select max(qid) from web_project.quiz));
         select setval('web_project.answer_id_seq',(select max(id) from web_project.answer))
@@ -177,4 +183,4 @@ if __name__ == '__main__':
     connection.commit()
     conn.close()
     with open('data.json','w',encoding='utf-8') as f:
-        f.write(json.dumps(list(res_list),ensure_ascii=False,indent=4))
+        f.write(json.dumps((res_list),ensure_ascii=False,indent=4))
