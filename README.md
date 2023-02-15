@@ -3,7 +3,7 @@
 
 ## 1.下载项目
 ```
-git clone https://github.com/rolemee/web_project_py.git
+git clone https://github.com/thusloop/web.git
 ```
 ## 2.环境依赖
 **python=3.10.0**
@@ -23,9 +23,9 @@ docker run -it --rm \
 getmeili/meilisearch:v0.29
 ```
 #### 三.postgresql
-自行安装。安装好后建立rolemee的无密码用户，然后再创建web-project的schema.然后与奴性init.sql
+自行安装。安装好后建立postgres的用户,密码为root，然后再创建web-project的schema.然后与运行init.sql
 #### 四.数据导入
-讲爬取到的百度知道的数据放入data/alldata中。如果为转成utf-8 请将`data.py` 中49-60行注释打开。
+讲爬取到的百度知道的数据放入data/alldata中。
 #### 五.初始化
 ``` bash
 python data.py
